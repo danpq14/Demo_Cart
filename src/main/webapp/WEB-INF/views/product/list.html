@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>List Product</h1>
+<h1><a th:href="@{/showCart}">Show Cart</a></h1>
+<hr>
+<div>
+    <table border="1">
+        <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Product Price</th>
+            <th colspan="2"></th>
+        </tr>
+        <th:block th:each="product : ${products}">
+            <tr>
+                <td th:text="*{product.id}"></td>
+                <td th:text="*{product.name}"></td>
+                <td th:text="*{product.price}"></td>
+                <td><a th:href="@{/addToCart/{id}(id=*{product.id})}">Add to cart</a></td>
+            </tr>
+        </th:block>
+        <div>
+            <a th:href="@{'/list'(page=${products.number - 1})}" th:if="${products.hasPrevious()}">Previous</a>
+            <span th:text="${products.number + 1}"></span>/<span th:text="${products.totalPages}"></span>
+            <a th:href="@{'/list'(page=${products.number + 1})}" th:if="${products.hasNext()}">Next</a>
+        </div>
+    </table>
+</div>
+</body>
+</html>
